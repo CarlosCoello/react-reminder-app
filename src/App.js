@@ -33,19 +33,19 @@ class App extends Component {
   renderReminders(){
     const { reminders } = this.props;
     return (
-      <ul className="list-group">
+      <tbody>
         {
           reminders.map( (reminder) => {
             return (
-              <li key={reminder.id} className="list-group-item">
-                  <span>{reminder.text} | &nbsp;</span>
-                  <span><strong>due date:</strong> { moment(new Date(reminder.dueDate)).fromNow()} &nbsp;</span>
-                  <button className="btn btn-danger" onClick={() => this.deleteReminder(reminder.id)}>&#9747;</button>
-              </li>
+                <tr key={reminder.id} >
+                  <td>{reminder.text}</td>
+                  <td>{moment(new Date(reminder.dueDate)).fromNow()}</td>
+                  <td><button className="btn btn-danger" onClick={() => this.deleteReminder(reminder.id)}>&#9747;</button></td>
+                </tr>
             )
           })
         }
-      </ul>
+      </tbody>
     )
   }
 
@@ -54,21 +54,31 @@ class App extends Component {
     return (
       <div className="App">
         <div className="container">
-          <header className="jumbotron">
+          <header className="jumbotron bg-primary text-success">
             <h2>Reminders APP</h2>
+            <p className="lead text-light">type a task you need to do today or in the future</p>
           </header>
           <div className="form-group">
             <input type="text" className="form-control"
             onChange={ event => this.setState({text: event.target.value})} />  
             <input type="datetime-local" className="form-control" onChange={ event => this.setState({dueDate: event.target.value})} />  
           </div>
-          <button className="btn btn-primary" onClick={() => this.addReminder()}>Add Reminder</button> &nbsp;
+          <button className="btn btn-success" onClick={() => this.addReminder()}>Add Reminder</button> &nbsp;
           <button className="btn btn-danger" onClick={() => this.clearAllReminders()}>Clear All Reminders</button>
         </div>
         <br />
         <br />
         <div className="container">
-          {this.renderReminders()}  
+          <table className="table">
+            <thead className="thead-light">
+              <tr>
+                <th>Reminder</th>
+                <th>Date</th>
+                <th>Delete Reminder</th>
+              </tr>
+            </thead>
+              {this.renderReminders()}
+          </table>  
         </div>
       </div>
     );
