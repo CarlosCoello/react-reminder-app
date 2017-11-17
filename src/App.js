@@ -16,6 +16,10 @@ class App extends Component {
 
   addReminder(){
     this.props.addReminder(this.state.text, this.state.dueDate);
+    this.setState({
+      text: '',
+      dueDate: ''
+    })
   }
 
   deleteReminder(id){
